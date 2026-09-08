@@ -1,0 +1,100 @@
+@reference "tailwindcss";
+
+@media print {
+  @page { margin: 12mm; }
+  body { min-width: 0; background: white; }
+  .page-screen,
+  .topbar,
+  .sidebar,
+  .page-actions,
+  .filter-card,
+  .pagination,
+  .page-size-label,
+  .action-link,
+  .input-group > .button { display: none !important; }
+  .print-document { display: block !important; }
+  .shell-body { @apply block min-h-0; }
+  .content { width: 100%; }
+  .page { @apply max-w-none p-0; }
+  .card,
+  .card-grid > .card {
+    @apply mt-5 rounded-none border-0 p-0 shadow-none;
+  }
+  .card-grid { @apply mt-5 grid; }
+  .data-table { @apply min-w-0; }
+  .data-table td input,
+  .field input,
+  .field select,
+  .field textarea {
+    @apply border-0 bg-transparent;
+  }
+}
+
+/* Print document layout */
+.print-document { @apply mx-auto min-w-0 w-full; box-sizing: border-box; padding-inline: 1px; display: none; }
+.print-document--landscape { page: landscape-print; }
+@page landscape-print { size: landscape; }
+.print-document-header { @apply mb-8 border-b pb-4; border-color: var(--color-border-strong); }
+.print-document-header--list { @apply relative text-center; }
+.print-document-header--report { @apply text-center; }
+.print-audit-info { @apply mb-5 flex justify-between text-xs; color: var(--color-text-muted); }
+.print-document-header h1 { @apply m-0 mt-2 text-2xl font-bold; color: var(--color-text); }
+.print-document-date { @apply m-0 mt-2 text-xs; color: var(--color-text-muted); }
+.print-site { @apply mb-5 text-sm font-normal; color: var(--color-text); }
+.print-info-grid { @apply grid grid-cols-2 gap-6; }
+.print-info-table { @apply w-full border-collapse text-xs; }
+.print-info-table th, .print-info-table td { @apply border px-2 py-2 text-left; border-color: var(--color-border-strong); }
+.print-info-table th { @apply w-24 bg-slate-50 font-normal; color: var(--color-text-muted); }
+.print-info-table td { @apply whitespace-pre-wrap; color: var(--color-text); }
+.print-summary { min-height: 3.5rem; }
+.print-rich-content { white-space: normal; line-height: 1.7; }
+.print-rich-content table { width: 100%; border-collapse: collapse; }
+.print-rich-content td, .print-rich-content th { border: 1px solid #cbd5e1; padding: 4px 6px; }
+.print-info-table--work th { @apply w-auto; }
+
+/* Print tables */
+.print-report-table { @apply break-all text-xs; box-sizing: border-box; }
+.print-report-table th { @apply bg-slate-50 font-normal; }
+.print-table--fixed { @apply table-fixed; }
+.print-col--label { width: 14%; }
+.print-col--value { width: 36%; }
+.print-item-table, .print-phase-table { @apply text-xs; }
+.print-item-table { @apply mt-5; }
+.print-phase-table { @apply mt-5; }
+.print-item-col--wide { width: 36%; }
+.print-item-col--narrow { width: 14%; }
+.print-page-footer { @apply mt-5 text-center text-xs; color: var(--color-text-muted); }
+
+/* Approval and document sections */
+.approval-section { @apply mt-10 grid grid-cols-3 gap-4 border-t pt-4; border-color: var(--color-border-strong); }
+.approval-item { @apply text-left; }
+.approval-item h2 { @apply m-0 px-2 py-1 text-xs font-normal; color: var(--color-text-muted); }
+.approval-values { @apply flex min-h-20 flex-col px-2 py-2 text-xs; color: var(--color-text); }
+.approval-values span { @apply min-h-5; }
+.print-section { @apply mb-7; }
+.print-section h2 { @apply mb-3 border-b pb-2 text-lg font-bold; border-color: var(--color-border); color: var(--color-text); }
+.print-fields { @apply grid grid-cols-[100px_1fr] gap-x-4 gap-y-2 text-sm; }
+.print-fields dt { @apply font-normal; color: var(--color-text-muted); }
+.print-fields dd { @apply m-0 whitespace-pre-wrap; color: var(--color-text); }
+.print-table { @apply w-full border-collapse text-xs; box-sizing: border-box; }
+.print-table th, .print-table td { @apply border px-2 py-2 text-left; border-color: var(--color-border-strong); }
+.print-table th { @apply whitespace-nowrap font-bold; background: var(--color-surface-muted); color: var(--color-text); }
+.print-table-empty { @apply py-8 text-center; color: var(--color-text-muted); }
+.print-section-title { @apply m-0 mt-4 text-left text-xs font-bold; color: var(--color-text); }
+.print-check-table { @apply w-full table-fixed border-0 text-xs; border-collapse: collapse; }
+.print-check-table td { @apply w-1/2 border-0 p-1; }
+.print-check-cell { @apply grid grid-cols-[auto_auto_1fr] items-center gap-1; }
+.print-check-label { @apply text-left; }
+.print-check-box { @apply text-center whitespace-nowrap; }
+.print-signature-line { @apply flex items-center justify-between whitespace-nowrap; }
+.print-supplement-line { @apply flex items-center justify-between gap-3 text-xs whitespace-nowrap; }
+.print-tall-row th,
+.print-tall-row td { height: 4rem; vertical-align: top; }
+.cell-grid { @apply grid items-center gap-2; }
+.cell-grid--3 { @apply grid-cols-3; }
+
+@media print {
+  .print-document { @apply flex min-h-screen flex-col; display: flex !important; }
+  .print-document { padding-bottom: 32mm; }
+  .approval-section { @apply fixed bottom-0 left-0 right-0 mt-0 bg-white; }
+}

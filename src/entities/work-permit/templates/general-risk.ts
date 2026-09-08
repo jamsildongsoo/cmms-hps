@@ -1,0 +1,26 @@
+export const generalRiskTemplate = {
+  permitType: 'generalRisk',
+  title: '일반위험작업 허가서',
+  items: [
+    '작업구역 설정(출입경고표시)',
+    '가스농도 측정',
+    '밸브차단 및 차단표지부착',
+    '맹판설치 및 표지부착',
+    '용기개방 및 압력방출',
+    '위험물질방출 및 처리',
+    '용기내부 세정 및 처리',
+    '불활성가스 치환 및 환기',
+    '정전·잠금·표지부착',
+    '환기장비',
+    '조명장비',
+    '소화기',
+    '안전장구',
+    '안전교육',
+    '감독자 입회',
+    '안전관리자 입회',
+  ].map((label, index) => ({
+    id: `general-risk-${index + 1}`,
+    label,
+    order: index + 1,
+  })),
+} as const
