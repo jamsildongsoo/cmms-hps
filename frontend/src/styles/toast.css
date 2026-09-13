@@ -1,0 +1,22 @@
+.toast-viewport {
+  position: fixed;
+  z-index: 1000;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  gap: 0.5rem;
+  width: min(24rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+.toast {
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 20px rgb(15 23 42 / 18%);
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-size: 0.875rem;
+}
+
+.toast--success { background: #166534; }
+.toast--error { background: #b91c1c; }

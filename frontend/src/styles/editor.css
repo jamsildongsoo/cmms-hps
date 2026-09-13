@@ -1,0 +1,57 @@
+@reference "tailwindcss";
+
+/* ==========================================================================
+   Editor & Prose Styles (에디터 전용 스타일)
+   [사용처] 리치 텍스트 에디터 위젯 (src/shared/editor/RichTextEditor.tsx) 및 
+           에디터로 작성된 본문 HTML 출력 영역 (.prose)
+   ========================================================================== */
+
+@layer components {
+  /* 1. 에디터 컴포넌트 래퍼 */
+  .rich-editor {
+    @apply overflow-hidden rounded-md border bg-white;
+    border-color: var(--color-border);
+  }
+
+  /* 2. 에디터 상단 툴바 (글꼴, 크기, 색상, 굵게, 기울임, 표 삽입 등) */
+  .rich-editor-toolbar {
+    @apply flex flex-nowrap items-center gap-1 overflow-x-auto border-b bg-slate-50 p-2;
+    border-color: var(--color-border);
+  }
+
+  .rich-editor-toolbar select,
+  .rich-editor-toolbar button {
+    @apply h-8 shrink-0 rounded border bg-white px-2 text-xs text-slate-700 cursor-pointer;
+    border-color: var(--color-border);
+  }
+
+  .rich-editor-toolbar select:nth-of-type(1) { @apply w-[72px]; }
+  .rich-editor-toolbar select:nth-of-type(2) { @apply w-[104px]; }
+  .rich-editor-toolbar select:nth-of-type(3) { @apply w-[72px]; }
+
+  .rich-editor-toolbar button:hover {
+    @apply bg-blue-50 text-blue-700;
+  }
+
+  /* 3. 에디터 텍스트 입력 본문 영역 */
+  .rich-editor-content {
+    @apply min-h-[240px] cursor-text select-text px-3 py-2.5 text-sm leading-7 outline-none;
+    color: var(--color-text);
+  }
+
+  .rich-editor-content:focus {
+    @apply ring-2 ring-inset ring-blue-600/15;
+  }
+
+  /* 4. 에디터 및 본문 공통 Prose HTML 태그 스타일 */
+  .prose {
+    @apply text-sm leading-7 text-slate-700;
+  }
+  .prose h2 { @apply mb-2 mt-3 text-lg font-bold text-slate-900; }
+  .prose h3 { @apply mb-1 mt-2 text-base font-bold text-slate-900; }
+  .prose ol { @apply list-decimal pl-6 my-2; }
+  .prose ul { @apply list-disc pl-6 my-2; }
+  .prose table { @apply my-3 w-full border-collapse text-xs; }
+  .prose td,
+  .prose th { @apply border px-2 py-1.5 text-left border-slate-300; }
+}

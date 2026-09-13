@@ -1,0 +1,153 @@
+@reference "tailwindcss";
+
+/* ==========================================================================
+   Print Layout System (속성 명칭 기반 인쇄 전용 유틸리티 스타일 시트)
+   [설계 원칙] 특정 도메인/목적 명칭을 배제하고, 순수 CSS 속성(Property) 및 수치 기반 유틸리티 체계로 작성됨.
+              선택자 단 1회 통합 선언 적용 (중복 선언 0%).
+   [사용처] 인쇄 전용 독립 문서 트리를 구성하는 React 인쇄 폼 컴포넌트
+           (<section className="print-document"> / 가로·세로 용지, 표 및 분할 레이아웃)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Media Print 전역 출력 규칙 & 화면 요소 은닉
+   ========================================================================== */
+@media print {
+  @page { margin: 12mm; }
+  body { min-width: 0; background: white; color: black; }
+  
+  /* 화면 UI 요소 인쇄 시 완전 숨김 */
+  .no-print,
+  .page-screen,
+  .topbar,
+  .sidebar,
+  .page-actions,
+  .filter-card,
+  .pagination,
+  .page-size-label,
+  .action-link,
+  .input-group > .button { display: none !important; }
+
+  /* 인쇄 전용 문서 활성화 */
+  .print-document { display: flex !important; min-h-screen: 100vh; flex-direction: column; padding-bottom: 32mm; }
+  .shell-body { @apply block min-h-0; }
+  .content { width: 100%; }
+  .page { @apply max-w-none p-0; }
+}
+
+/* ==========================================================================
+   2. Document Container & Page Orientation (용지 및 방향 속성)
+   ========================================================================== */
+.print-document {
+  @apply mx-auto min-w-0 w-full;
+  box-sizing: border-box;
+  padding-inline: 1px;
+  display: none;
+}
+/* 가로 방향 용지 설정 (A4 Landscape) */
+.print-document--landscape { page: landscape-print; }
+@page landscape-print { size: landscape; }
+
+
+/* ==========================================================================
+   3. Table System (표 속성 & 단 1회 통합 선언)
+   ========================================================================== */
+
+/* 3-1. 기본 표 및 통합 셀 (Table Root & Single-Block Unified Cells) */
+.print-table {
+  @apply w-full table-fixed border-collapse text-xs mb-3;
+  box-sizing: border-box;
+}
+
+/* 표 제목 셀 (th - 단 1회 선언: 테두리, 여백, 연회색 배경, 굵은글씨, 가운데정렬) */
+.print-table th {
+  @apply border border-slate-400 px-2 py-1.5 bg-slate-100 font-semibold text-slate-700 text-center;
+  word-break: break-all;
+}
+
+/* 표 내용 셀 (td - 단 1회 선언: 테두리, 여백, 좌측정렬, 줄바꿈 유지) */
+.print-table td {
+  @apply border border-slate-400 px-2 py-1.5 text-left whitespace-pre-wrap text-slate-900;
+  word-break: break-all;
+}
+
+/* 3-2. 테두리 속성 모디파이어 (Border Modifiers) */
+.print-table--bordered { @apply border border-slate-400; }
+
+.print-table--borderless th,
+.print-table--borderless td {
+  border: 0 !important;
+  background-color: transparent !important;
+}
+
+.print-table--horizontal th,
+.print-table--horizontal td {
+  @apply border-b border-t-0 border-l-0 border-r-0 border-slate-400;
+}
+
+/* 3-3. Column Width Utilities (숫자 = 폭 % 수치 속성) */
+.print-col--14 { width: 14%; }  /* 14% : 4열 표의 1,3열 표준 제목 폭 */
+.print-col--20 { width: 20%; }  /* 20% : 긴 제목용 폭 */
+.print-col--25 { width: 25%; }  /* 25% : 4분할 균등 폭 */
+.print-col--30 { width: 30%; }  /* 30% : 좁은 내용 폭 */
+.print-col--33 { width: 33.333%; } /* 33.3% : 3분할 균등 폭 */
+.print-col--36 { width: 36%; }  /* 36% : 4열 표의 2,4열 표준 내용 폭 */
+.print-col--50 { width: 50%; }  /* 50% : 2열 표 반반(50:50) 폭 */
+.print-col--86 { width: 86%; }  /* 86% : 2열 표 전폭 내용 폭 (14%+86%=100% 수직 정렬) */
+
+/* 3-4. Row Height Multiplier Utilities (숫자 = 배수 행 높이 속성) */
+.print-table tr.print-row--1 { height: auto; }
+.print-table tr.print-row--2 { height: 4rem; }  /* 2행 높이 (4rem / 약 64px - 서명/확인란) */
+.print-table tr.print-row--3 { height: 6rem; }  /* 3행 높이 (6rem / 약 96px - 개요/조치사항) */
+.print-table tr.print-row--4 { height: 8rem; }  /* 4행 높이 (8rem / 약 128px - 종합소견/본문) */
+
+/* 높이가 지정된 행의 셀 상단 정렬 */
+.print-table tr.print-row--2 td, .print-table tr.print-row--2 th,
+.print-table tr.print-row--3 td, .print-table tr.print-row--3 th,
+.print-table tr.print-row--4 td, .print-table tr.print-row--4 th {
+  vertical-align: top;
+}
+
+
+/* ==========================================================================
+   4. Grid & Flex Layout Primitives (속성 명칭 기반 레이아웃)
+   ========================================================================== */
+
+/* N열 동등 가로 분할 그리드 속성 */
+.print-grid--2 { @apply grid grid-cols-2 gap-4 border-t pt-4 border-slate-400; }
+.print-grid--3 { @apply grid grid-cols-3 gap-4 border-t pt-4 border-slate-400; }
+.print-grid--4 { @apply grid grid-cols-4 gap-4 border-t pt-4 border-slate-400; }
+
+/* 플렉스 정렬 속성 */
+.print-flex--between { @apply flex justify-between items-center whitespace-nowrap; }
+.print-flex--center  { @apply flex justify-center items-center; }
+.print-flex--start   { @apply flex justify-start items-center gap-2; }
+
+/* 셀 내부 3단 인라인 정렬 속성 (아이콘 / 라벨 / 입력) */
+.print-cell-inline { @apply grid grid-cols-[auto_auto_1fr] items-center gap-1; }
+
+
+/* ==========================================================================
+   5. Text & Spacing Utilities (속성 기반 텍스트 및 여백)
+   ========================================================================== */
+
+/* 타이틀 박스 구역 속성 */
+.print-header-box {
+  @apply mb-8 border-b pb-4 border-slate-300 text-center;
+}
+.print-header-box h1 {
+  @apply m-0 mt-2 text-2xl font-bold text-slate-900;
+}
+
+/* 텍스트 속성 유틸리티 */
+.print-text--center { @apply text-center; }
+.print-text--left   { @apply text-left; }
+.print-text--right  { @apply text-right; }
+.print-text--muted  { @apply text-slate-500 text-xs; }
+.print-text--bold   { @apply font-bold text-slate-900; }
+.print-text--sm     { @apply text-sm font-normal text-slate-800; }
+.print-text--lg     { @apply text-lg font-bold text-slate-900; }
+
+/* 여백 속성 유틸리티 */
+.print-mb--3 { @apply mb-3; }
+.print-mb--5 { @apply mb-5; }
+.print-mt--5 { @apply mt-5; }

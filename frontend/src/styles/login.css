@@ -1,0 +1,96 @@
+@reference "tailwindcss";
+
+/* ==========================================================================
+   Login Page Styles (로그인 화면 전용 스타일)
+   [사용처] 독립 로그인 화면 (src/pages/login/LoginPage.tsx)
+   ========================================================================== */
+
+@layer components {
+  /* 1. 로그인 전체 배경 페이지 래퍼 */
+  .auth-page {
+    --color-border: #1e293b;
+    --color-border-subtle: #0f172a;
+    --color-border-strong: #334155;
+    @apply relative grid min-h-screen place-items-center overflow-hidden bg-slate-950 px-5 py-8;
+  }
+
+  /* 2. 로그인 배경 아우라 오버레이 */
+  .auth-page::before,
+  .auth-page::after {
+    content: '';
+    @apply pointer-events-none absolute h-[380px] w-[380px] rounded-full opacity-25 blur-[80px];
+  }
+  .auth-page::before { @apply -left-[100px] -top-[160px] bg-purple-900; }
+  .auth-page::after { @apply -bottom-[160px] -right-[100px] bg-blue-900; }
+
+  /* 3. 라이트/다크 테마 스위처 (우측 상단) */
+  .theme-switcher {
+    @apply absolute right-6 top-6 z-10 grid h-[38px] w-[38px] place-items-center rounded-[10px] border bg-slate-900/80 p-0 text-slate-400 cursor-pointer;
+    border-color: var(--color-border);
+  }
+  .theme-switcher:hover { @apply bg-slate-800/90 text-slate-200; }
+  .theme-switcher svg {
+    @apply h-[18px] w-[18px] fill-none stroke-current stroke-[1.8];
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* 4. 로그인 카드 & 브랜드 타이틀 상자 */
+  .auth-layout {
+    @apply relative z-[1] flex w-full max-w-[400px] flex-col items-center;
+  }
+  .auth-card {
+    @apply box-border w-full rounded-[14px] border bg-slate-900/85 p-6 shadow-2xl backdrop-blur;
+    border-color: var(--color-border);
+  }
+  .auth-brand-card {
+    @apply box-border mb-3 w-full rounded-[14px] border bg-slate-900/85 px-6 py-5 shadow-2xl backdrop-blur;
+    border-color: var(--color-border);
+  }
+  .auth-heading { @apply text-center; }
+  .auth-heading .eyebrow { @apply mb-2.5 text-[10px] tracking-[.08em] text-blue-400; }
+  .auth-heading [role="heading"] { @apply m-0 text-2xl font-bold leading-tight tracking-tight text-slate-100; }
+  .auth-heading p:last-child { @apply m-0 text-sm text-slate-400; }
+
+  /* 5. 로그인 입력 폼 및 로그인 버튼 */
+  .auth-form { @apply flex flex-col gap-[18px]; }
+  .auth-form label { @apply grid grid-cols-[100px_1fr] items-center gap-4 text-sm text-slate-300; }
+  .auth-form input {
+    @apply border-slate-800 bg-slate-950 text-slate-200 placeholder:text-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/15;
+  }
+  .button--login {
+    @apply mt-1 flex h-11 w-full items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 px-4 text-white font-semibold rounded-md transition-colors cursor-pointer;
+  }
+  .button--login:hover { @apply from-blue-500 to-indigo-500; }
+
+  /* 6. 로그인 메시지 & 보안/저작권 풋터 */
+  .auth-message { @apply mt-[18px] text-center text-sm text-blue-300; }
+  .auth-security { @apply mt-4 text-center text-xs leading-5 text-slate-500; }
+  .auth-security span { @apply mt-2 block; }
+  .auth-copyright { @apply absolute bottom-5 left-0 right-0 z-[1] m-0 text-center text-[11px] font-medium tracking-[.08em] text-slate-500; }
+
+  /* 7. 라이트 테마(Light Mode) 적용 시 오버라이드 규칙 */
+  .auth-page.light-theme { @apply bg-slate-100; }
+  .auth-page.light-theme::before { @apply bg-blue-200 opacity-60; }
+  .auth-page.light-theme::after { @apply bg-violet-200 opacity-50; }
+  .light-theme .theme-switcher {
+    @apply bg-white/80 text-slate-600;
+    border-color: var(--color-border-strong);
+  }
+  .light-theme .theme-switcher:hover { @apply bg-white text-slate-950; }
+  .light-theme .auth-card,
+  .light-theme .auth-brand-card {
+    @apply bg-white/90 shadow-slate-400/20;
+    border-color: var(--color-border);
+  }
+  .light-theme .auth-heading [role="heading"] { @apply text-slate-900; }
+  .light-theme .auth-heading p:last-child { @apply text-[#68758a]; }
+  .light-theme .auth-form label { @apply text-[#59677d]; }
+  .light-theme .auth-form input { @apply border-[#d8e0eb] bg-white text-[#263247] placeholder:text-slate-400; }
+  .light-theme .auth-message { @apply text-[#315db9]; }
+}
+
+@media (max-width: 700px) {
+  .auth-card { @apply p-5; }
+  .auth-form label { @apply flex items-stretch; }
+}

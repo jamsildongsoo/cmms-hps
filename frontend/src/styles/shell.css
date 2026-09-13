@@ -1,0 +1,104 @@
+@reference "tailwindcss";
+
+/* ==========================================================================
+   App Shell Styles (애플리케이션 최상위 프레임 & 내비게이션 전용)
+   [사용처] 메인 애플리케이션 프레임 래퍼, 상단바, 좌측 사이드바 내비게이션
+           (src/widgets/app-shell/AppShell.tsx)
+   ========================================================================== */
+
+@layer components {
+  /* 1. App Shell 전체 래퍼 레이아웃 */
+  .shell {
+    @apply min-h-screen;
+    background: var(--color-page);
+    color: var(--color-text);
+  }
+  .shell-body {
+    @apply flex min-h-[calc(100vh-68px)];
+  }
+
+  /* 2. Topbar (상단 바) - 브랜드 로고, 사용자 요약, 사용자 메뉴 버튼, 로그아웃 */
+  .topbar {
+    @apply flex min-h-[68px] items-center justify-between border-b bg-white px-7;
+    border-color: var(--color-border);
+  }
+  .brand {
+    @apply text-xl font-extrabold tracking-[-.04em] text-[#4169e1];
+  }
+  .topbar-actions {
+    @apply ml-auto flex min-w-0 items-center gap-3;
+  }
+  .user-summary {
+    @apply flex items-center gap-3.5 text-[13px];
+    color: var(--color-text-muted);
+  }
+  .user-summary span + span {
+    @apply border-l pl-3.5;
+    border-color: var(--color-border);
+  }
+  .icon-button {
+    @apply ml-1 grid h-[34px] w-[34px] place-items-center rounded-full border-0 bg-blue-50 p-0 text-blue-600 cursor-pointer;
+  }
+  .icon-button svg {
+    @apply h-[19px] w-[19px] fill-current;
+  }
+  .logout-button {
+    @apply h-8 rounded-md border border-slate-300 bg-transparent px-3 text-xs font-normal text-slate-700 cursor-pointer transition-colors hover:bg-slate-100;
+  }
+
+  /* 3. Sidebar (좌측 메뉴바) - 아코디언 메뉴 그룹 및 서브 아이템 버튼 */
+  .sidebar {
+    @apply w-[220px] shrink-0 border-r bg-white px-3.5 py-6;
+    border-color: var(--color-border);
+  }
+  .sidebar-nav {
+    @apply flex flex-col gap-5;
+  }
+  .nav-group {
+    @apply flex flex-col gap-1;
+  }
+  .nav-group-title {
+    @apply m-0;
+  }
+  .nav-group-toggle {
+    @apply flex w-full items-center justify-between border-0 bg-transparent px-3.5 text-left text-sm font-bold leading-6 cursor-pointer hover:text-blue-700;
+    color: var(--color-text);
+  }
+  .nav-group-toggle svg {
+    @apply h-4 w-4 shrink-0 fill-none stroke-current stroke-2 transition-transform;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .nav-group-toggle[aria-expanded="true"] svg {
+    @apply rotate-180;
+  }
+  .nav-subnav {
+    @apply flex flex-col gap-0.5;
+  }
+  .nav-subitem {
+    @apply w-full rounded-md border-0 bg-transparent px-3.5 py-2 text-left text-xs cursor-pointer transition-colors;
+    color: var(--color-text-muted);
+  }
+  .nav-subitem:hover,
+  .nav-subitem.active {
+    @apply bg-blue-50 font-bold text-blue-700;
+  }
+}
+
+@media (max-width: 700px) {
+  .topbar {
+    @apply min-h-[68px] items-start gap-3.5 px-5 py-3.5;
+  }
+  .topbar-actions {
+    @apply flex-wrap justify-end;
+  }
+  .user-summary {
+    @apply flex-wrap justify-end gap-2;
+  }
+  .user-summary span + span {
+    @apply pl-2;
+  }
+  .sidebar {
+    @apply w-[170px] px-3;
+  }
+}

@@ -1,0 +1,289 @@
+@reference "tailwindcss";
+
+/* ==========================================================================
+   Main Content Universal UI Components Styles
+   [설계 원칙] 특정 도메인/목적 명칭을 배제하고, 순수 CSS 속성(Property) 및 수치 기반 유틸리티 체계로 작성됨.
+              
+   [사용처] 메인 화면 영역 (AppShell 내부 main.content)
+           - 화면 카드 레이아웃 (.card, .card-grid)
+           - 반응형 입력 폼 그리드 및 컨트롤 (.form-grid, .field, .control)
+           - 범용 데이터 표 (.data-table, .data-table--borderless, .data-table--bordered)
+           - 화면 공통 버튼 및 링크 (.button, .action-link)
+           - 모달 팝업 및 페이지 탭 (.modal, .tabs)
+   ========================================================================== */
+
+@layer components {
+  /* ==========================================================================
+     1. Layout Primitives & Page Headers (속성 기반 페이지 & 카드 래퍼)
+     ========================================================================== */
+  .page {
+    @apply mx-auto box-border w-full max-w-[1120px] px-12 pb-16 pt-10 text-left;
+    color: var(--color-text);
+  }
+  .page-header,
+  .section-header,
+  .page-actions,
+  .input-group {
+    @apply flex items-center;
+  }
+  .page-header,
+  .section-header {
+    @apply justify-between;
+  }
+  .page-actions {
+    @apply gap-2;
+  }
+  .content {
+    @apply min-w-0 flex-1;
+  }
+  
+  /* 타이포그래피 (Eyebrow, Page Title) */
+  .eyebrow {
+    @apply mb-1.5 text-xs font-bold uppercase tracking-[.12em] text-[#4169e1];
+  }
+  .page-title,
+  .page-header h1 {
+    @apply m-0 text-xl font-bold leading-tight tracking-[-.02em];
+    color: var(--color-text);
+  }
+
+  /* 카드 상자 및 그리드 레이아웃 */
+  .card {
+    @apply mt-7 rounded-xl border bg-white p-[25px] shadow-[0_3px_14px_rgba(31,49,81,.04)];
+    border-color: var(--color-border);
+  }
+  .card-grid {
+    @apply mt-7 grid gap-7;
+  }
+  .card-grid--2 { @apply grid-cols-2; }
+  .card-grid > .card { @apply mt-0; }
+  
+  .card-title {
+    @apply mb-5 flex items-center gap-2 text-lg font-bold text-slate-900;
+  }
+  .card-title svg {
+    @apply h-4 w-4 fill-none stroke-current stroke-[1.8];
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .filter-card { @apply mt-7; }
+  .filter-actions { @apply flex items-end; }
+  .result-count {
+    @apply text-sm;
+    color: var(--color-text-muted);
+  }
+
+  /* ==========================================================================
+     2. Buttons & Action Links (버튼 속성 컴포넌트)
+     ========================================================================== */
+  .button {
+    @apply inline-flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 text-sm font-semibold transition-colors;
+  }
+  .button--form-action {
+    @apply gap-1.5 text-xs font-normal;
+  }
+  .button--form-action svg {
+    @apply h-3.5 w-3.5 fill-none stroke-current stroke-[1.8];
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .button--primary {
+    @apply border-blue-600 bg-blue-600 text-white hover:border-blue-700 hover:bg-blue-700;
+  }
+  .button--neutral {
+    @apply border-slate-300 bg-transparent text-slate-700 hover:bg-slate-100;
+  }
+  .button--secondary {
+    @apply border-slate-300 bg-slate-100 text-slate-700 hover:bg-slate-200;
+  }
+  .button--danger {
+    @apply border-transparent bg-transparent px-2 text-rose-600 hover:bg-rose-50;
+  }
+  .button--danger svg {
+    @apply h-4 w-4 fill-none stroke-current stroke-[1.8];
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .action-link {
+    @apply cursor-pointer text-[13px] font-bold text-[#4169e1] underline underline-offset-[3px] hover:text-[#294eb6];
+  }
+
+  /* ==========================================================================
+     3. Navigation Tabs & Modals (탭 및 모달 팝업 속성 유틸리티)
+     ========================================================================== */
+  .tabs {
+    @apply mt-7 flex min-w-0 gap-1 overflow-x-auto border-b;
+    border-color: var(--color-border);
+  }
+  .tab {
+    @apply shrink-0 cursor-pointer border-0 border-b-2 border-transparent bg-transparent px-4 py-3 text-sm font-medium whitespace-nowrap hover:bg-blue-50 hover:text-blue-700;
+    color: var(--color-text-muted);
+  }
+  .tab.active {
+    @apply border-blue-600 font-bold text-blue-700;
+  }
+  .modal-backdrop {
+    @apply fixed inset-0 z-50 grid place-items-center bg-slate-900/40 px-5 py-8;
+  }
+  .modal {
+    @apply max-h-[90vh] w-full max-w-[760px] overflow-y-auto rounded-xl border bg-white p-6 shadow-2xl;
+    border-color: var(--color-border);
+  }
+  .modal--small { @apply max-w-[420px]; }
+  .modal-header {
+    @apply flex items-start justify-between gap-5 border-b pb-4;
+    border-color: var(--color-border);
+  }
+  .modal-header h2 { @apply m-0 text-lg font-bold text-slate-900; }
+  .modal-actions { @apply mt-6 flex justify-end gap-2; }
+
+  /* ==========================================================================
+     4. Form Grid & Input Controls (입력 폼 그리드 및 컨트롤 속성)
+     ========================================================================== */
+  .form-grid { @apply grid gap-5; }
+  .form-grid--1 { @apply grid-cols-1; }
+  .form-grid--2 { @apply grid-cols-2; }
+  .form-grid--3 { @apply grid-cols-3; }
+  .form-grid--4 { @apply grid-cols-4; }
+  .form-grid--5 { @apply grid-cols-5; }
+  .form-grid--6 { @apply grid-cols-6; }
+  
+  .field {
+    @apply flex flex-col gap-1.5 text-xs font-normal;
+    color: var(--color-text-muted);
+  }
+  .checkbox-field {
+    @apply flex items-center gap-2 text-xs font-normal;
+    color: var(--color-text);
+  }
+
+  /* 그리드 열 차지 비율 속성 (span--1 ~ span--4) */
+  .span--1, .field--span-1 { @apply col-span-1; }
+  .span--2, .field--span-2 { @apply col-span-2; }
+  .span--3, .field--span-3 { @apply col-span-3; }
+  .span--4, .field--span-4 { @apply col-span-4; }
+
+  /* 폼 입력 필드 (input, select, textarea) */
+  .control,
+  .field input:not([type="checkbox"]),
+  .field select,
+  .field textarea {
+    @apply box-border w-full rounded-md border bg-white text-sm font-normal outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/15;
+    border-color: var(--color-border);
+    color: var(--color-text);
+    font: inherit;
+  }
+  .control,
+  .field input:not([type="checkbox"]),
+  .field select { @apply h-10 px-[11px]; }
+  .field textarea { @apply resize-y px-[11px] py-2.5; }
+
+  .input-group { @apply gap-1.5; }
+  .input-group input { @apply min-w-0; }
+  .input-group > .button { @apply w-10 shrink-0 px-0; }
+  .input-group > .button svg {
+    @apply h-4 w-4 fill-none stroke-current stroke-2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  .field input[readonly],
+  .field input:disabled,
+  .field select:disabled,
+  .field textarea[readonly],
+  .field textarea:disabled {
+    @apply cursor-not-allowed bg-slate-50 text-slate-600;
+  }
+
+  /* ==========================================================================
+     5. Data Table System (표 속성 & 단 1회 통합 선언)
+     ========================================================================== */
+  .table-card { @apply pb-5; }
+  .table-scroll { @apply overflow-x-auto; }
+  
+  /* 표 전체 루트 */
+  .data-table {
+    @apply min-w-[650px] w-full border-collapse;
+  }
+
+  /* 표 제목 셀 (th - 단 1회 선언: 테두리, 여백, 배경색, 폰트, 좌측정렬) */
+  .data-table th {
+    @apply border-b border-slate-200 px-2.5 py-2 text-xs whitespace-nowrap bg-slate-50 text-left font-normal text-slate-700;
+  }
+
+  /* 표 내용 셀 (td - 단 1회 선언: 테두리, 여백, 좌측정렬, 텍스트색상) */
+  .data-table td {
+    @apply border-b border-slate-200 px-2.5 py-2 text-xs text-left text-slate-900;
+  }
+
+  .data-table td input {
+    @apply h-9 w-full rounded-md border bg-white px-2 text-xs outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600/15;
+    border-color: var(--color-border);
+  }
+
+  .data-table td input[readonly],
+  .data-table td input:disabled {
+    @apply cursor-not-allowed bg-slate-50 text-slate-600;
+  }
+
+  /* 표 테두리 모디파이어 */
+  .data-table--borderless th,
+  .data-table--borderless td {
+    border-bottom: 0 !important;
+    background-color: transparent !important;
+  }
+  .data-table--bordered th,
+  .data-table--bordered td {
+    @apply border border-slate-200;
+  }
+  .data-table--compact {
+    @apply min-w-0 table-fixed;
+  }
+
+  /* 페이징 컨트롤 */
+  .table-footer {
+    @apply relative mt-5 flex min-h-8 items-center justify-center;
+  }
+  .page-size-label {
+    @apply absolute left-0 flex items-center gap-1.5 text-xs;
+    color: var(--color-text-muted);
+  }
+  .page-size-select {
+    @apply h-8 rounded-md border bg-white px-2 text-xs font-normal;
+    border-color: var(--color-border);
+  }
+  .pagination { @apply flex items-center gap-1; }
+  .pagination-button {
+    @apply grid h-8 w-8 place-items-center rounded-md border-0 bg-transparent text-sm cursor-pointer hover:bg-blue-50 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40;
+    color: var(--color-text-muted);
+  }
+  .pagination-button.active {
+    @apply bg-blue-50 font-semibold text-blue-700;
+  }
+
+  /* ==========================================================================
+     6. Spacing & Text Utilities (알림 및 접근성 유틸리티)
+     ========================================================================== */
+  .notice { @apply mt-6 rounded-md border border-blue-200 bg-transparent px-4 py-3 text-sm text-blue-700; }
+
+  .visually-hidden {
+    @apply absolute h-px w-px overflow-hidden p-0;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* 반응형 미디어 쿼리 */
+@media (max-width: 800px) {
+  .page { @apply px-5 pb-12 pt-7; }
+  .card-grid--2, .form-grid--2 { @apply grid-cols-1; }
+  .form-grid--3, .form-grid--4, .form-grid--5, .form-grid--6 { @apply grid-cols-2; }
+  .span--2, .span--3, .field--span-2, .field--span-3 { @apply col-auto; }
+}
+
+@media (max-width: 520px) {
+  .page-header { @apply flex-col items-start gap-5; }
+  .form-grid--3, .form-grid--4, .form-grid--5, .form-grid--6 { @apply grid-cols-1; }
+  .card { @apply p-[18px]; }
+}
