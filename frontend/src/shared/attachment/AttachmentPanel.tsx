@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { downloadAttachment } from './attachmentApi'
+import { downloadAttachment } from '../../modules/attachment/api/attachmentApi'
 import { useAttachments } from './useAttachments'
 
 type AttachmentPanelProps = {

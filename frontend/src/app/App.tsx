@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { applyTheme, getInitialTheme, type Theme } from '../core/theme/theme'
-import type { LoginInfo } from '../entities/auth/types'
-import LoginPage from '../pages/login/LoginPage'
+import type { LoginInfo } from '../modules/auth/types/types'
+import LoginPage from '../modules/auth/pages/LoginPage'
 import AppShell from '../widgets/app-shell/AppShell'
 import ToastViewport from '../shared/toast/ToastViewport'
-import { logout } from '../features/login/api/loginApi'
+import { logout } from '../modules/auth/api/loginApi'
 
 export default function App() {
   // 현재는 메모리 세션입니다. 백엔드 연계 후에는 로그인 응답을 저장하고,

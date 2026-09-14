@@ -1,5 +1,5 @@
 import { toast } from '../toast/toast'
-import { getAccessToken } from '../../features/login/auth-session'
+import { getAccessToken } from '../../modules/auth/api/auth-session'
 
 export type CommandResponse<T> = {
   success: true

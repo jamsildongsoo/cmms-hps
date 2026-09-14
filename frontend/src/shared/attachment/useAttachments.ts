@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import type { AttachmentItem, AttachmentResponse } from '../../entities/attachment/types'
-import { deleteAttachmentItem, getAttachment, getAttachments, uploadAttachment } from './attachmentApi'
+import type { AttachmentItem, AttachmentResponse } from '../../modules/attachment/types/types'
+import { deleteAttachmentItem, getAttachment, getAttachments, uploadAttachment } from '../../modules/attachment/api/attachmentApi'
 
 export function useAttachments(module: string, recordId?: string | null, siteId?: string | null) {
   const [attachment, setAttachment] = useState<AttachmentResponse | null>(null)

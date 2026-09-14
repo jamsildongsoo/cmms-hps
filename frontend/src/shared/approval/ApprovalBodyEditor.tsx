@@ -1,4 +1,4 @@
-import RichTextEditor from '../../shared/editor/RichTextEditor'
+import RichTextEditor from '../editor/RichTextEditor'
 
 type Props = { value: string; onChange: (value: string) => void; readOnly?: boolean }
 

@@ -1,6 +1,6 @@
-import { APPROVAL_PARTICIPANT_OPTIONS } from '../../entities/approval/constants'
+import { APPROVAL_PARTICIPANT_OPTIONS } from '../../modules/approval/types/constants'
 import { useState } from 'react'
-import type { ApprovalParticipantType } from '../../entities/approval/types'
+import type { ApprovalParticipantType } from '../../modules/approval/types/types'
 
 type ApprovalLineDraft = {
   userId: string

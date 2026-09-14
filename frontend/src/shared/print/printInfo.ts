@@ -1,4 +1,4 @@
-import type { LoginInfo } from '../../entities/auth/types'
+import type { LoginInfo } from '../../modules/auth/types/types'
 import type { PrintInfo } from './types'
 
 export const toPrintInfo = (session: LoginInfo): PrintInfo => ({
