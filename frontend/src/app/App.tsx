@@ -7,21 +7,42 @@ import ToastViewport from '../shared/toast/ToastViewport'
 import { logout } from '../modules/auth/api/loginApi'
 
 export default function App() {
-  // 현재는 메모리 세션입니다. 백엔드 연계 후에는 로그인 응답을 저장하고,
-  // 새로고침 시 /api/auth/me 등으로 세션을 복원하는 흐름을 추가합니다.
   const [session, setSession] = useState<LoginInfo | null>(null)
   const [theme, setTheme] = useState<Theme>(getInitialTheme)
 
-  useEffect(() => {
+  useEffect(function applyCurrentTheme(): void {
     applyTheme(theme)
   }, [theme])
 
-  const toggleTheme = () => setTheme((current) => current === 'dark' ? 'light' : 'dark')
+  function toggleTheme(): void {
+    setTheme(function changeTheme(current: Theme): Theme {
+      return current === 'dark' ? 'light' : 'dark'
+    })
+  }
 
-  return <>
-    {session
-      ? <AppShell session={session} theme={theme} onLogout={() => { logout(); setSession(null) }} />
-      : <LoginPage onLogin={setSession} theme={theme} onToggleTheme={toggleTheme} />}
-    <ToastViewport />
-  </>
+  function handleLogout(): void {
+    logout()
+    setSession(null)
+  }
+
+  return (
+    <>
+      {session ? (
+          <AppShell
+            session={session}
+            theme={theme}
+            onLogout={handleLogout}
+          />
+        )
+        : (
+          <LoginPage
+            onLogin={setSession}
+            theme={theme}
+            onToggleTheme={toggleTheme}
+          />
+        )}
+
+      <ToastViewport />
+    </>
+  )
 }
